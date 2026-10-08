@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wooasnack.wooahouse.com/sitemap.xml

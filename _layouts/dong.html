@@ -1,0 +1,82 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="region-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <a href="/region/{{ page.doShort | uri_escape }}/">{{ page.doShort }}</a>
+    <span>›</span>
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sigungu }}</a>
+    <span>›</span>
+    <span>{{ page.dong }}</span>
+  </nav>
+
+  <div class="region-page-header">
+    <h1>🐟 {{ page.sgLabel }} {{ page.dong }} 붕어빵·호떡·토스트</h1>
+    <p>{{ page.doShort }} {{ page.sigungu }} {{ page.dong }} 겨울간식 가게{% if page.totalCount > 0 %} · 총 {{ page.totalCount }}곳{% else %} · 근처 가게 안내{% endif %}</p>
+  </div>
+
+  <p class="summary-p">{{ page.summary }}</p>
+
+  <div>
+    <button type="button" class="near-btn" data-near-me>📍 내 주변 간식 찾기</button>
+    <a class="map-btn" href="https://map.kakao.com/?q={{ page.dong | uri_escape }}%20%EB%B6%95%EC%96%B4%EB%B9%B5">🗺️ 카카오맵에서 '{{ page.dong }} 붕어빵' 검색</a>
+    <a class="map-btn" href="https://map.naver.com/p/search/{{ page.dong | uri_escape }}%20%EB%B6%95%EC%96%B4%EB%B9%B5">🗺️ 네이버지도 검색</a>
+  </div>
+
+  {% if page.groups.size > 0 %}
+  <div class="chip-row">
+    {% for g in page.groups %}<a class="chip" href="/type/{{ g.key }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">{{ g.icon }} {{ page.dong }} {{ g.label }}<em>{{ g.count }}</em></a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  {% for g in page.groups %}
+  <h2 class="group-title" id="t-{{ g.key }}">{{ g.icon }} {{ page.dong }} {{ g.label }} 가게 {{ g.count }}곳</h2>
+  <ul class="office-list">
+    {% for s in g.items %}<li><a href="/shop/{{ s.slug }}/"><b>{{ s.shopName }}</b><small>{% if s.tel != "" %}📞 {{ s.tel }} · {% endif %}{% if s.road != "" %}{{ s.road }}{% else %}{{ s.lot }}{% endif %}</small></a></li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+
+  {% if page.nearShops.size > 0 %}
+  <h2 class="group-title">{% if page.totalCount > 0 %}가까운 다른 동네 간식 가게{% else %}{{ page.dong }} 근처 간식 가게{% endif %}</h2>
+  <ul class="office-list">
+    {% for s in page.nearShops %}<li><a href="/shop/{{ s.slug }}/"><b>{{ s.icon }} {{ s.name }}</b><small>{{ s.type }} · {{ s.sigungu }} {{ s.dong }} · 약 {{ s.km }}km</small></a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if page.nearDongs.size > 0 %}
+  <h2 class="group-title">이웃 동네 겨울간식</h2>
+  <div class="chip-row">
+    {% for n in page.nearDongs %}<a class="chip" href="/region/{{ n.do | uri_escape }}/{{ n.sgSlug | uri_escape }}/{{ n.dong | uri_escape }}/">{{ n.dong }} 붕어빵·호떡{% if n.n > 0 %}<em>{{ n.n }}</em>{% endif %}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="dong-nav">
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.prevDong.dong | uri_escape }}/">← {{ page.prevDong.dong }} 간식</a>
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.nextDong.dong | uri_escape }}/">{{ page.nextDong.dong }} 간식 →</a>
+  </div>
+
+  {% include faq.html %}
+
+  <div class="tip-box">
+    <h2>{{ page.dong }} 붕어빵 노점 찾는 요령</h2>
+    <p>붕어빵·호떡 노점은 구청 허가·단속 상황, 날씨, 재료 사정에 따라 자리를 자주 옮기거나 쉽니다. 인허가 데이터에 잡히지 않는 경우가 많아 이 사이트에는 상호에 간식 이름이 들어간 점포만 담겨 있습니다.
+    지하철역 출구, 시장 입구, 학교 앞, 횡단보도 주변처럼 유동 인구가 많은 곳을 지도 앱에서 직접 검색해 보세요.</p>
+    <p style="margin-top:8px;"><a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sgLabel }} 동네별 겨울간식 →</a> · <a href="/guide/">겨울간식 즐기는 법 →</a></p>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

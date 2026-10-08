@@ -1,0 +1,51 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="region-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <a href="/region/">지역별</a>
+    <span>›</span>
+    <span>{{ page.doShort }}</span>
+  </nav>
+
+  <div class="region-page-header">
+    <h1>🐟 {{ page.doShort }} 붕어빵·호떡·토스트 겨울간식</h1>
+    <p>{{ page.doShort }} 겨울간식 가게 총 {{ page.totalCount }}곳 · 종류 또는 시군구를 선택하세요</p>
+  </div>
+
+  <div>
+    <button type="button" class="near-btn" data-near-me>📍 내 주변 간식 찾기</button>
+  </div>
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  <div class="section-title" style="margin:8px 0 12px;">🏷️ {{ page.doShort }} 종류별</div>
+  <div class="cat-btn-grid">
+    {% for t in page.typeList %}<a class="cat-btn" href="/type/{{ t.key }}/{{ page.doShort | uri_escape }}/"><span class="ico">{{ t.icon }}</span>{{ page.doShort }} {{ t.label }}<small>{{ t.count }}곳</small></a>
+    {% endfor %}
+  </div>
+
+  <div class="section-title" style="margin:32px 0 12px;">📍 시군구별</div>
+  <div class="region-grid">
+    {% for sg in page.sigunguList %}
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ sg.slug | uri_escape }}/" class="region-btn">
+      <span class="region-icon">📍</span>{{ sg.name }} <span style="color:#9CA3AF;font-size:.82rem;">({{ sg.count }})</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="tip-box">
+    <h2>{{ page.doShort }} 겨울간식 가게 찾기</h2>
+    <p>{{ page.doShort }}에서 영업 중인 붕어빵·호떡·토스트·어묵·꽈배기 가게를 시군구와 동네별로 찾을 수 있습니다. 노점은 인허가 데이터에 없어 포함되지 않았습니다.</p>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

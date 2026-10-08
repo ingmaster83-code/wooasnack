@@ -1,0 +1,16 @@
+---
+layout: default
+title: 지역별 붕어빵·호떡·토스트 겨울간식 가게
+description: 시/도별 전국 붕어빵·호떡·토스트·어묵·꽈배기 가게 목록. 서울, 경기, 부산 등 지역과 동네별로 겨울간식 가게를 찾아보세요.
+---
+
+<div class="section">
+  <nav class="breadcrumb"><a href="/">홈</a> <span>›</span> <span>지역별 겨울간식</span></nav>
+  <h1 style="font-size:1.6rem;font-weight:800;margin:20px 0 8px;">📍 지역별 겨울간식 가게 찾기</h1>
+  <p style="color:#6B7280;margin-bottom:32px;">시/도를 선택하세요</p>
+
+  <div class="region-grid">
+    {% for d in site.data.snack_stats.do_counts %}<a href="/region/{{ d.name }}/" class="region-btn"><span class="region-icon">📍</span>{{ d.name }} <span style="color:#9CA3AF;font-size:.82rem;">({{ d.count }})</span></a>
+    {% endfor %}
+  </div>
+</div>

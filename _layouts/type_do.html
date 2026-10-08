@@ -1,0 +1,43 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="region-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <a href="/type/{{ page.typeKey }}/">{{ page.typeLabel }}</a>
+    <span>›</span>
+    <span>{{ page.doShort }}</span>
+  </nav>
+
+  <div class="region-page-header">
+    <h1>{{ page.typeIcon }} {{ page.doShort }} {{ page.typeLabel }} 파는 곳</h1>
+    <p>{{ page.doShort }} {{ page.typeLabel }} {{ page.totalCount }}곳 · 시군구를 선택하세요</p>
+  </div>
+
+  <p class="summary-p">{{ page.summary }}</p>
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  <div class="region-grid">
+    {% for sg in page.sigunguList %}
+    <a href="/type/{{ page.typeKey }}/{{ page.doShort | uri_escape }}/{{ sg.slug | uri_escape }}/" class="region-btn">
+      <span class="region-icon">📍</span>{{ sg.name }} {{ page.typeLabel }} <span style="color:#9CA3AF;font-size:.82rem;">({{ sg.count }})</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="tip-box">
+    <h2>{{ page.typeLabel }} 가게 안내</h2>
+    <p>{{ page.about }}</p>
+    <p style="margin-top:8px;"><a href="/region/{{ page.doShort | uri_escape }}/">{{ page.doShort }} 전체 겨울간식 →</a></p>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

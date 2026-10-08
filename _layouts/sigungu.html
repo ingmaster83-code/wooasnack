@@ -1,0 +1,55 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="region-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <a href="/region/{{ page.doShort | uri_escape }}/">{{ page.doShort }}</a>
+    <span>›</span>
+    <span>{{ page.sigungu }}</span>
+  </nav>
+
+  <div class="region-page-header">
+    <h1>🐟 {{ page.sgLabel }} 붕어빵·호떡·토스트 겨울간식</h1>
+    <p>{{ page.doShort }} {{ page.sigungu }} · 겨울간식 가게 {{ page.totalCount }}곳 · 동네를 선택하세요</p>
+  </div>
+
+  <p class="summary-p">{{ page.summary }}</p>
+
+  <div>
+    <button type="button" class="near-btn" data-near-me>📍 내 주변 간식 찾기</button>
+  </div>
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  {% if page.typeList.size > 0 %}
+  <div class="section-title" style="margin:8px 0 12px;">🏷️ {{ page.sigungu }} 종류별</div>
+  <div class="cat-btn-grid">
+    {% for t in page.typeList %}<a class="cat-btn" href="/type/{{ t.key }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/"><span class="ico">{{ t.icon }}</span>{{ page.sigungu }} {{ t.label }}<small>{{ t.count }}곳</small></a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section-title" style="margin:32px 0 12px;">📍 {{ page.sigungu }} 동네별 겨울간식</div>
+  <div class="region-grid">
+    {% for dg in page.dongList %}
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ dg.name | uri_escape }}/" class="region-btn">
+      <span class="region-icon">📍</span>{{ dg.name }} 붕어빵·호떡{% if dg.count > 0 %} <span style="color:#9CA3AF;font-size:.82rem;">({{ dg.count }})</span>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="tip-box">
+    <h2>{{ page.doShort }} {{ page.sigungu }} 겨울간식 안내</h2>
+    <p>동네 이름을 눌러 붕어빵·호떡·토스트 가게와 가까운 이웃 동네를 확인하세요. 괄호 안 숫자는 공공 인허가 데이터에 등록된 가게 수이며, 숫자가 없는 동네는 근처 가게를 안내합니다.</p>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

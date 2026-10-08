@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="region-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <span>종류별</span>
+  </nav>
+
+  <div class="region-page-header">
+    <h1>🏷️ 겨울간식 종류별 찾기</h1>
+    <p>붕어빵·호떡·토스트·어묵·꽈배기 등 종류를 선택하세요</p>
+  </div>
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  <div class="cat-btn-grid">
+    {% for t in page.typeList %}<a class="cat-btn" href="/type/{{ t.key }}/"><span class="ico">{{ t.icon }}</span>{{ t.label }}<small>전국 {{ t.count }}곳</small></a>
+    {% endfor %}
+  </div>
+
+  <div class="tip-box">
+    <h2>어떤 가게가 들어 있나요?</h2>
+    <p>상호에 붕어빵·호떡·토스트·어묵·꽈배기·호두과자·타코야끼·핫도그·만두·떡볶이 등 간식 이름이 들어간 영업 중 가게입니다. 노점은 인허가 데이터에 없어 포함되지 않았습니다.</p>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

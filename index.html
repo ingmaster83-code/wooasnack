@@ -1,0 +1,121 @@
+---
+layout: default
+title: 우아간식 - 우리 동네 붕어빵·호떡·토스트 파는 곳 찾기
+description: 동네 이름으로 붕어빵·호떡·토스트·어묵·꽈배기 가게를 찾아보세요. 역삼동 붕어빵, 홍대 호떡처럼 검색하면 근처 겨울간식 가게와 이웃 동네까지 한눈에 볼 수 있습니다.
+---
+
+<div class="hero">
+  <h1>우아간식 · 🐟 우리 동네 붕어빵·호떡·토스트 어디서 팔까?</h1>
+  <p>동네 이름을 입력하세요 (예: 역삼동 붕어빵, 상계동 호떡, 해운대 토스트)</p>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" class="search-input"
+           placeholder="예) 역삼동 붕어빵, 부평 호떡, 토스트..."
+           autocomplete="off" aria-label="겨울간식 검색">
+    <button class="search-btn" onclick="doSearch()">🔍 검색</button>
+  </div>
+  <div style="margin-top:14px;"><button type="button" class="near-btn" data-near-me>📍 내 주변 간식 찾기</button></div>
+</div>
+
+<div class="page-with-sidebar">
+<div>
+<div id="search-results"></div>
+
+<div class="top-ad-bar">
+  {% include ad.html %}
+</div>
+
+<div class="section" style="padding-bottom:0;">
+  <div class="info-box">
+    💡 행정안전부 인허가 데이터에서 영업 중인 <strong>{{ site.data.snack_stats.total_fmt }}곳</strong>의 붕어빵·호떡·토스트·어묵·꽈배기 등 간식 가게를 <strong>{{ site.data.snack_stats.dong_fmt }}개 동네</strong>별로 정리했습니다.
+    가게가 없는 동네도 가까운 간식 가게와 이웃 동네를 안내합니다. 길거리 노점은 인허가 데이터에 없어 포함되지 않았습니다.
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">🏷️ 종류별로 찾기</h2>
+  <div class="cat-btn-grid">
+    {% for t in site.data.snack_stats.types %}<a class="cat-btn" href="/type/{{ t.key }}/"><span class="ico">{{ t.icon }}</span>{{ t.label }}<small>전국 {{ t.count_fmt }}곳</small></a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">📍 지역별로 찾기</h2>
+  <div class="region-grid">
+    {% for d in site.data.snack_stats.do_counts %}<a href="/region/{{ d.name }}/" class="region-btn"><span class="region-icon">📍</span>{{ d.name }} <span style="color:#9CA3AF;font-size:.82rem;">({{ d.count }})</span></a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">🔥 간식 가게가 많은 동네</h2>
+  <div class="chip-row">
+    {% for d in site.data.snack_stats.top_dongs %}<a class="chip" href="{{ d.url }}">{{ d.label }}<em>{{ d.count }}</em></a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">✅ 겨울간식 가게 찾을 때 알아두세요</h2>
+  <ul style="color:#374151;line-height:1.9;font-size:.93rem;padding-left:22px;">
+    <li>붕어빵 노점은 <strong>허가·단속 상황과 날씨</strong>에 따라 자리를 자주 옮기거나 쉽니다.</li>
+    <li>이 사이트는 <strong>상호에 간식 이름이 들어간 점포</strong>만 보여줍니다. 노점은 지도 앱에서 직접 검색해 보세요.</li>
+    <li>폐업 신고 반영에 시차가 있으니 방문 전에 <strong>전화로 영업 여부</strong>를 확인하세요.</li>
+  </ul>
+  <p style="margin-top:12px;"><a href="/guide/">겨울간식 즐기는 법 보기 →</a></p>
+</div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+
+<script>
+let shops = null, dongs = null;
+const TYPE_WORDS = ['붕어빵','잉어빵','호떡','토스트','군고구마','어묵','오뎅','꽈배기','호두과자','타코야끼','핫도그','만두','찐빵','떡볶이','간식','겨울간식','노점','가게','파는곳','파는','곳','맛집'];
+
+async function loadAll() {
+  if (shops) return;
+  const [a, b] = await Promise.all([fetch('/search_index.json').then(r => r.json()), fetch('/assets/dongs.json').then(r => r.json())]);
+  a.forEach(f => { f.h = (f.n + ' ' + f.do + ' ' + f.sg + ' ' + f.dg + ' ' + f.c).toLowerCase(); });
+  b.forEach(f => { f.h = (f.d + ' ' + f.s + ' ' + f.n).toLowerCase(); });
+  shops = a; dongs = b;
+}
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  const el = document.getElementById('search-results');
+  if (!q) { el.innerHTML = ''; return; }
+  el.innerHTML = '<p style="text-align:center;padding:20px;color:#6B7280;">검색 중...</p>';
+  loadAll().then(() => {
+    const toks = q.toLowerCase().split(/\s+/).filter(Boolean);
+    const placeToks = toks.filter(t => !TYPE_WORDS.includes(t));
+    const dres = [];
+    if (placeToks.length) {
+      for (const d of dongs) { if (placeToks.every(t => d.h.includes(t))) { dres.push(d); if (dres.length >= 16) break; } }
+    }
+    const sres = [];
+    for (const f of shops) { if (toks.every(t => f.h.includes(t))) { sres.push(f); if (sres.length >= 30) break; } }
+    if (!dres.length && !sres.length) {
+      el.innerHTML = '<p style="text-align:center;padding:20px;color:#6B7280;">검색 결과가 없습니다. 동네 이름(예: 역삼동)으로 다시 검색해 보세요.</p>';
+      return;
+    }
+    let html = '<div style="max-width:960px;margin:0 auto;padding:0 20px;">';
+    if (dres.length) {
+      html += '<p style="padding:8px 0;font-size:.9rem;color:#6B7280;">동네 검색 결과</p><div class="chip-row">' +
+        dres.map(d => `<a class="chip" href="/region/${encodeURIComponent(d.d)}/${encodeURIComponent(d.g)}/${encodeURIComponent(d.n)}/">${esc(d.s)} ${esc(d.n)} 붕어빵·호떡·토스트</a>`).join('') + '</div>';
+    }
+    if (sres.length) {
+      html += '<p style="padding:14px 0 8px;font-size:.9rem;color:#6B7280;">가게 검색 결과</p><ul class="office-list">' +
+        sres.map(f => `<li><a href="/shop/${f.s}/"><b>${esc(f.n)}</b><small>${esc(f.c)} · ${esc(f.do)} ${esc(f.sg)} ${f.dg === '기타' ? '' : esc(f.dg)}</small></a></li>`).join('') + '</ul>';
+    }
+    el.innerHTML = html + '</div>';
+    el.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+const urlQ = new URLSearchParams(location.search).get('q');
+if (urlQ) { document.getElementById('searchInput').value = urlQ; doSearch(); }
+</script>

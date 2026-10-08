@@ -1,0 +1,95 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="camp-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <a href="/region/{{ page.doShort | uri_escape }}/">{{ page.doShort }}</a>
+    <span>›</span>
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sigungu }}</a>
+    <span>›</span>
+    <a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">{{ page.dongLabel }}</a>
+  </nav>
+
+  <div class="camp-header">
+    <div class="camp-tags">
+      <span class="tag tag-type">📍 {{ page.doShort }} {{ page.sigungu }} {{ page.dongLabel }}</span>
+      <span class="tag tag-safe">{{ page.typeIcon }} {{ page.typeLabel }}</span>
+    </div>
+    <h1 class="camp-title">{{ page.shopName }}</h1>
+    <div class="camp-info-row"><span class="camp-info-icon">📍</span><span>{{ page.addr }}</span></div>
+    {% if page.tel != "" %}<div class="camp-info-row"><span class="camp-info-icon">📞</span><a href="tel:{{ page.tel }}">{{ page.tel }}</a></div>{% endif %}
+    {% if page.permit != "" %}<div class="camp-info-row"><span class="camp-info-icon">📅</span><span>인허가일 {{ page.permit }}</span></div>{% endif %}
+  </div>
+
+  <p class="summary-p" style="margin-top:14px;">{{ page.summary }}</p>
+
+  <div>
+    <a class="map-btn" href="https://map.kakao.com/?q={{ page.addr | uri_escape }}">🗺️ 카카오맵에서 위치 확인</a>
+    <a class="map-btn" href="https://map.naver.com/p/search/{{ page.addr | uri_escape }}">🗺️ 네이버지도로 보기</a>
+    <button type="button" class="near-btn" data-near-me>📍 내 주변 간식 찾기</button>
+  </div>
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  <div class="camp-section trust-box">
+    <h2>📋 등록 정보 (공공데이터)</h2>
+    <ul class="ctx" style="padding-left:20px;">
+      <li><strong>종류</strong> {{ page.typeLabels | join: ', ' }}</li>
+      {% if page.biz != "" %}<li><strong>업태</strong> {{ page.biz }}</li>{% endif %}
+      {% if page.road != "" %}<li><strong>도로명주소</strong> {{ page.road }}</li>{% endif %}
+      {% if page.lot != "" %}<li><strong>지번주소</strong> {{ page.lot }}</li>{% endif %}
+      {% if page.permit != "" %}<li><strong>인허가일</strong> {{ page.permit }}</li>{% endif %}
+      {% if page.upd != "" %}<li><strong>정보 갱신일</strong> {{ page.upd }}</li>{% endif %}
+    </ul>
+    <p class="kv-note">행정안전부 지방행정 인허가 데이터 기준 영업/정상 상태이며, 메뉴·가격·영업시간은 제공되지 않습니다. 폐업 신고가 반영되기까지 시차가 있으니 방문 전에 확인하세요.</p>
+  </div>
+
+  {% if page.near.size > 0 %}
+  <div class="camp-section">
+    <h2>📍 가까운 간식 가게</h2>
+    <ul class="office-list">
+      {% for n in page.near %}<li><a href="/shop/{{ n.slug }}/"><b>{{ n.name }}</b><small>{{ n.type }} · {{ n.dist }}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  {% if page.ring.size > 0 %}
+  <div class="region-camps">
+    <h2>{{ page.dongLabel }} 다른 겨울간식 가게</h2>
+    <ul class="office-list">
+      {% for n in page.ring %}<li><a href="/shop/{{ n.slug }}/"><b>{{ n.name }}</b><small>{{ n.type }}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="camp-section">
+    <h2>🔎 더 찾아보기</h2>
+    <div class="chip-row">
+      <a class="chip" href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">{{ page.dongLabel }} 붕어빵·호떡·토스트</a>
+      <a class="chip" href="/type/{{ page.type }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sgLabel }} {{ page.typeLabel }}</a>
+      <a class="chip" href="/type/{{ page.type }}/{{ page.doShort | uri_escape }}/">{{ page.doShort }} {{ page.typeLabel }}</a>
+      {% for n in page.nearDongs %}<a class="chip" href="/region/{{ n.do | uri_escape }}/{{ n.sgSlug | uri_escape }}/{{ n.dong | uri_escape }}/">{{ n.dong }} 간식</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% include faq.html %}
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FoodEstablishment","name":{{ page.shopName | jsonify }},"address":{"@type":"PostalAddress","streetAddress":{{ page.addr | jsonify }},"addressRegion":{{ page.doShort | jsonify }},"addressLocality":{{ page.sigungu | jsonify }},"addressCountry":"KR"}{% if page.tel != "" %},"telephone":{{ page.tel | jsonify }}{% endif %}{% if page.lat %},"geo":{"@type":"GeoCoordinates","latitude":{{ page.lat }},"longitude":{{ page.lng }}}{% endif %}}</script>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

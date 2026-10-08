@@ -1,0 +1,73 @@
+---
+layout: default
+---
+
+<div class="page-with-sidebar">
+<div class="region-page">
+
+  <nav class="breadcrumb" aria-label="위치">
+    <a href="/">홈</a>
+    <span>›</span>
+    <a href="/type/{{ page.typeKey }}/">{{ page.typeLabel }}</a>
+    <span>›</span>
+    <a href="/type/{{ page.typeKey }}/{{ page.doShort | uri_escape }}/">{{ page.doShort }}</a>
+    <span>›</span>
+    {% if page.level == 'dong' %}
+    <a href="/type/{{ page.typeKey }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sigungu }}</a>
+    <span>›</span>
+    <span>{{ page.dong }}</span>
+    {% else %}
+    <span>{{ page.sigungu }}</span>
+    {% endif %}
+  </nav>
+
+  <div class="region-page-header">
+    <h1>{{ page.typeIcon }} {{ page.sgLabel }}{% if page.level == 'dong' %} {{ page.dong }}{% endif %} {{ page.typeLabel }} 파는 곳</h1>
+    <p>{{ page.doShort }} {{ page.sigungu }}{% if page.level == 'dong' %} {{ page.dong }}{% endif %} · {{ page.typeLabel }} 가게 {{ page.totalCount }}곳</p>
+  </div>
+
+  <p class="summary-p">{{ page.summary }}</p>
+
+  <div>
+    <button type="button" class="near-btn" data-near-me>📍 내 주변 간식 찾기</button>
+    {% if page.level == 'dong' %}<a class="map-btn" href="https://map.kakao.com/?q={{ page.dong | uri_escape }}%20{{ page.typeLabel | uri_escape }}">🗺️ 카카오맵에서 {{ page.dong }} {{ page.typeLabel }} 검색</a>{% endif %}
+  </div>
+
+  {% if page.level == 'sg' %}
+  <div class="chip-row">
+    {% for d in page.dongList %}<a class="chip" href="/type/{{ page.typeKey }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ d.name | uri_escape }}/">{{ d.name }} {{ page.typeLabel }}<em>{{ d.count }}</em></a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+
+  <ul class="office-list">
+    {% for s in page.items %}<li><a href="/shop/{{ s.slug }}/"><b>{{ s.shopName }}</b><small>{% if page.level == 'sg' and s.dong != "기타" %}{{ s.dong }} · {% endif %}{% if s.tel != "" %}📞 {{ s.tel }} · {% endif %}{% if s.road != "" %}{{ s.road }}{% else %}{{ s.lot }}{% endif %}</small></a></li>
+    {% endfor %}
+  </ul>
+
+  {% if page.nearDongs.size > 0 %}
+  <h2 class="group-title">이웃 동네 {{ page.typeLabel }}</h2>
+  <div class="chip-row">
+    {% for n in page.nearDongs %}<a class="chip" href="/region/{{ n.do | uri_escape }}/{{ n.sgSlug | uri_escape }}/{{ n.dong | uri_escape }}/">{{ n.dong }} 간식</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="tip-box">
+    <h2>{{ page.typeLabel }} 가게 안내</h2>
+    <p>{{ page.about }} 노점은 인허가 데이터에 없어 포함되지 않았습니다.</p>
+    <p class="hub-links" style="margin-top:10px;">
+      {% if page.level == 'dong' %}<a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">{{ page.dong }} 모든 겨울간식 →</a>
+      <a href="/type/{{ page.typeKey }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sigungu }} {{ page.typeLabel }} →</a>{% else %}<a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sigungu }} 모든 겨울간식 →</a>{% endif %}
+    </p>
+  </div>
+
+  {% include faq.html %}
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>

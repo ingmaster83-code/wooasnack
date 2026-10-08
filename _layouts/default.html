@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.url == '/' %}{{ page.title }}{% elsif page.title %}{{ page.title }} | 우아간식{% else %}우아간식 - 우리 동네 붕어빵·호떡·토스트 찾기{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description | escape }}{% else %}{{ site.description | strip_newlines | escape }}{% endif %}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+
+  {% if page.layout == 'shop' %}
+  <meta property="og:type" content="article">
+  {% else %}
+  <meta property="og:type" content="website">
+  {% endif %}
+  <meta property="og:title" content="{% if page.url == '/' %}{{ page.title | escape }}{% elsif page.title %}{{ page.title | escape }} | 우아간식{% else %}우아간식 - 우리 동네 붕어빵·호떡·토스트 찾기{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description | escape }}{% else %}{{ site.description | strip_newlines | escape }}{% endif %}">
+  <meta property="og:image" content="{{ '/assets/og-image.png' | absolute_url }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:site_name" content="우아간식">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ '/' | relative_url }}" class="site-logo">
+      <span class="logo-icon">🐟</span>
+      <span class="logo-text">우아간식</span>
+    </a>
+    <nav class="header-nav">
+      <a href="{{ '/type/' | relative_url }}">종류별</a>
+      <a href="{{ '/region/' | relative_url }}">지역별</a>
+      <a href="{{ '/search/' | relative_url }}">검색</a>
+      <a href="https://wooahouse.com">WooaHouse →</a>
+    </nav>
+  </div>
+</header>
+
+<script src="{{ '/assets/js/wooa-sites-bar.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/ad-dev-placeholder.js' | relative_url }}"></script>
+
+{% unless page.layout == 'shop' or page.layout == 'dong' or page.layout == 'sigungu' or page.layout == 'do' or page.layout == 'type_page' or page.layout == 'type_do' or page.layout == 'type_list' or page.layout == 'type_index' or page.url == '/' %}
+<div class="top-ad-bar">
+  {% include ad.html %}
+</div>
+{% endunless %}
+
+<main class="site-main">
+  {{ content }}
+</main>
+<script src="{{ '/assets/js/wooa-sidebar.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/near-me.js' | relative_url }}"></script>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-disclaimer">
+      본 정보는 행정안전부 지방행정 인허가 데이터(공공데이터포털 LOCALDATA)에서 영업/정상 상태인 일반음식점·제과점 중 상호에 붕어빵·호떡·토스트·어묵 등 간식 이름이 들어간 가게를 정리한 것입니다.
+      길거리 노점은 인허가 데이터에 등록되지 않는 경우가 많아 포함되지 않았고, 폐업 신고 반영에 시차가 있어 실제 영업 여부와 다를 수 있습니다. 메뉴·가격·영업시간은 제공하지 않으니 방문 전에 확인하세요.
+    </p>
+    <p class="footer-links">
+      <a href="https://wooahouse.com">WooaHouse</a> ·
+      <a href="https://wooafood.wooahouse.com">우아칼로리</a> ·
+      <a href="https://wooastreet.wooahouse.com">우아거리</a> ·
+      <a href="{{ '/privacy/' | relative_url }}">개인정보처리방침</a>
+    </p>
+    <p class="copyright">&copy; 2026 우아간식 · WooaHouse. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
