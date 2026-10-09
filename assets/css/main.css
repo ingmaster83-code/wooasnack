@@ -490,3 +490,8 @@ img { max-width: 100%; height: auto; }
 .dong-nav a{flex:1;display:block;padding:12px 14px;border:1px solid #E5E7EB;border-radius:12px;background:#fff;color:#111827;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
 .dong-nav a:hover{border-color:#F97316;background:#FFF7ED}
 .shop-meta{display:inline-block;padding:2px 8px;border-radius:6px;background:#FFEDD5;color:#9A3412;font-size:.75rem;font-weight:600;margin-left:6px}
+
+/* 사이드바 래퍼 안의 본문 블록은 열 너비에 맞춘다 */
+.page-with-sidebar > .side-main { min-width: 0; }
+.page-with-sidebar > .side-main > * { max-width: none; margin-left: 0; margin-right: 0; }
+.page-with-sidebar > .side-main > .section { padding-left: 0; padding-right: 0; }
