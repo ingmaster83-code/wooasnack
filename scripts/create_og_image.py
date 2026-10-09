@@ -79,7 +79,7 @@ def create_og_image():
 
     icon_font = load_font(26, bold=True)
     boxes = [
-        ("1만 곳 수록", ACCENT2),
+        ("1.8만 곳 수록", ACCENT2),
         ("주소·전화번호", (21, 128, 61)),
         ("동네별 검색", (180, 83, 9)),
     ]

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-process_data.py - 행안부 LOCALDATA 일반음식점(general_restaurants)·제과점(bakeries) 인허가 CSV에서
+process_data.py - 행안부 LOCALDATA 일반음식점(general_restaurants)·휴게음식점(rest_cafes)·제과점(bakeries) 인허가 CSV에서
 '붕어빵·호떡·토스트·어묵…' 등 겨울/길거리 간식 상호를 가진 영업 중 점포를 뽑아 사이트 데이터로 가공한다.
 
-입력: data/raw/general_restaurants.csv, data/raw/bakeries.csv (CP949, EPSG:5174)
+입력: data/raw/general_restaurants.csv(일반음식점), rest_cafes.csv(휴게음식점), bakeries.csv(제과점) (CP949, EPSG:5174)
       ../wooaleisure/_rawdata/lei_*.json (동 중심 좌표 보강용 - 있으면 사용)
 출력: _rawdata/snk_{시도}.json (점포), _rawdata/dongs.json (동 허브 목록+근처 정보), assets/dongs.json (내 주변 찾기용 경량본), search_index.json
 """
@@ -135,7 +135,7 @@ def main():
     tf = Transformer.from_crs("EPSG:5174", "EPSG:4326", always_xy=True)
     items, seen, skipped = [], Counter(), Counter()
     dedupe = set()
-    for src in ("general_restaurants", "bakeries"):
+    for src in ("general_restaurants", "rest_cafes", "bakeries"):
         path = RAW / f"{src}.csv"
         n_open = 0
         for r in read_rows(path):
