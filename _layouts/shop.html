@@ -78,6 +78,7 @@ layout: default
   <div class="camp-section">
     <h2>🔎 더 찾아보기</h2>
     <div class="chip-row">
+      {% if page.dong != "기타" %}<a class="chip" href="https://wooatown.wooahouse.com/동네/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">🏘️ {{ page.dongLabel }} 전체 생활정보</a>{% endif %}
       <a class="chip" href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">{{ page.dongLabel }} 붕어빵·호떡·토스트</a>
       <a class="chip" href="/type/{{ page.type }}/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sgLabel }} {{ page.typeLabel }}</a>
       <a class="chip" href="/type/{{ page.type }}/{{ page.doShort | uri_escape }}/">{{ page.doShort }} {{ page.typeLabel }}</a>

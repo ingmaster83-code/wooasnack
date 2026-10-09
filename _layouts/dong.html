@@ -74,7 +74,7 @@ layout: default
     <h2>{{ page.dong }} 붕어빵 노점 찾는 요령</h2>
     <p>붕어빵·호떡 노점은 구청 허가·단속 상황, 날씨, 재료 사정에 따라 자리를 자주 옮기거나 쉽니다. 인허가 데이터에 잡히지 않는 경우가 많아 이 사이트에는 상호에 간식 이름이 들어간 점포만 담겨 있습니다.
     지하철역 출구, 시장 입구, 학교 앞, 횡단보도 주변처럼 유동 인구가 많은 곳을 지도 앱에서 직접 검색해 보세요.</p>
-    <p style="margin-top:8px;"><a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sgLabel }} 동네별 겨울간식 →</a> · <a href="/guide/">겨울간식 즐기는 법 →</a></p>
+    <p style="margin-top:8px;"><a href="/region/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/">{{ page.sgLabel }} 동네별 겨울간식 →</a> · <a href="/guide/">겨울간식 즐기는 법 →</a> · {% if page.dong != "기타" %}<a href="https://wooatown.wooahouse.com/동네/{{ page.doShort | uri_escape }}/{{ page.sgSlug | uri_escape }}/{{ page.dong | uri_escape }}/">🏘️ {{ page.dongLabel }} 전체 생활정보 (우아동네) →</a>{% endif %}</p>
   </div>
 
 </div>
